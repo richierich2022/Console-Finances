@@ -87,3 +87,70 @@ var finances = [
   ['Feb-2017', 671099],
 ];
 
+console.log("Finanical Analysis");
+console.log("-".repeat(40));
+
+//Display total no. of months within the console
+console.log("The total number of months included in the dataset is: " + finances.length);
+
+//The net total amount of Profit/Losses over the entire period
+var net_total = 0;
+for (let i = 0; i < finances.length; i++)
+{
+    net_total = net_total + finances[i][1];
+}
+console.log("The net total amount of Profit/Losses over the entire period: " + net_total);
+
+//The average of the changes in Profit/Losses from month to month to find change over entire period
+var Total_change = 0;
+for (let i = 0; i < (finances.length - 1); i++)
+{
+    Total_change = Total_change + (finances[i+1][1] - finances[i][1]);
+}
+var Total_rate_change = Total_change/(finances.length-1);
+console.log("The average of the change in Profit/losses over the entire period is: " + Total_rate_change.toFixed(2));
+
+//The greatest increase in profits (date and amount) over the entire period
+//The greatest decrease in losses (date and amount) over the entire period
+var array_profits = []; // just defining an array
+var array_loss = [];
+var c = 0; // index value for profit
+var d = 0;// index value for loss
+for (let i = 0; i < (finances.length - 1); i++)
+{
+  var temp = (finances[i+1][1] - finances[i][1]); // this is the difference between two months for example Jan and Feb
+  if(finances[i+1][1] > finances[i][1]) // this is a if condition when say Feb values are greater than Jan values
+  {
+    array_profits[c] = [finances[i+1][0],temp]; //[c] is array number one and array number two
+    c += 1;
+  }
+  else // this is where losses will go 
+  {
+    array_loss[d] = [finances[i+1][0],temp]; // finance [i+1][0] is actually the date, temp is the difference we calculate
+    d += 1;
+  }
+}
+
+var max_profit = 0;
+var max_index = 0;
+for(i=0;i<array_profits.length;i++)
+{
+  if (array_profits[i][1]>max_profit)//max profit stores the current profit when the iteration is running
+  {
+    max_profit = array_profits[i][1];//store the current max current profit
+    max_index = i;//stores the index which is needed later for accessing the profit array  
+  }
+}
+
+var max_loss = 0;
+var max_Loss_index = 0;
+for(i=0;i<array_loss.length;i++)// this is the same as profit above but for loss
+{
+  if (array_loss[i][1]<max_loss)
+  {
+    max_loss = array_loss[i][1];
+    max_Loss_index = i;
+  }
+}
+console.log("max profit month: " + array_profits[max_index][0] + " max profit: " + max_profit);
+console.log("max loss  month: " + array_loss[max_Loss_index][0] + " max loss: " + max_loss);
